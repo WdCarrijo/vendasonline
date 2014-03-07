@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="template/main.xhtml" >
+
+	<ui:define name="body">
+		<h:form id="empresaList">
+			<p:dataTable id="tblEmpresa" var="empresa" emptyMessage="Nenhum registro encontrado." rows="10" paginator="true"
+				value="#{empresaListMB.empresas}" >
+			
+				<p:column headerText="Nome da Empresa">
+					#{empresa.razaoSocial}
+				</p:column>
+			
+				<p:column headerText="Ações" >
+					<div align="center">
+						<p:commandButton icon="ui-icon ui-icon-trash" title="Remover Empresa" onclick="confirmarRemoverEmpresaDlg.show();"  />
+						<p:confirmDialog widgetVar="confirmarRemoverEmpresaDlg" header="Remover Empresa" message="Você tem certeza que deseja remover a empresa selecionada?" showEffect="fade" hideEffect="explode">  
+					        <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":empresaList:tblEmpresa" action="#{empresaEditMB.remover(empresa)}" onclick="confirmarRemoverEmpresaDlg.hide();" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />  
+					        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="confirmarRemoverEmpresaDlg.hide();" />       
+	    				</p:confirmDialog>  
+					</div>
+				</p:column>
+			
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

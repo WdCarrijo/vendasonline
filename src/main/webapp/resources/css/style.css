@@ -1,0 +1,51 @@
+* {
+	font-size: 12px; !important;
+}
+		
+.btnIncluir, .ui-widget-content .btnIncluir {
+	border-width:1px;
+	border-color: #285e8e;
+	border-style: solid;
+	text-align: center;
+	font-weight: bold;
+	background: #3276b1;
+	color: #FFFFFF;
+	border-radius: 6px;
+}
+
+.btnConcluir, .ui-widget-content .btnConcluir {
+	border-width:1px;
+	border-color: #285e8e;
+	border-style: solid;
+	text-align: center;
+	font-weight: bold;
+	background: #34A338;
+	color: #FFFFFF;
+	border-radius: 6px;
+}
+
+.btnCancelar, .ui-widget-content .btnCancelar {
+	border-width:1px;
+	border-color: #285e8e;
+	border-style: solid;
+	text-align: center;
+	font-weight: bold;
+	background: #F35858;
+	color: #FFFFFF;
+	border-radius: 6px;
+}
+		
+.login {
+	position:absolute;
+	top:35%;
+	left:42%;
+}
+
+.footer {
+	background-color: silver;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    font-weight: bold;
+    margin-left: -10px;
+}

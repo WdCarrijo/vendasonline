@@ -1,0 +1,37 @@
+<html xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" locale="#currentLocale" />
+
+<h:head>
+	<title>#{messages['main.app.title']}</title>
+	<h:outputStylesheet name="css/style.css" />
+</h:head>
+
+<h:body style="background-color:#f1f1f1">
+
+	<p:outputPanel id="loader" layout="block" style="width: 100%; height: 100%;">
+	
+		<table style="width: 100%">
+			<tr>
+				<td height="20"><ui:include src="/menu.xhtml" /></td>
+			</tr>
+			<tr valign="top">
+				<td height="600"><ui:insert name="body" /></td>
+			</tr>
+			<tr align="center" class="footer">
+				<td height="20" align="center" class="text-input">#{messages['main.footer.text']}</td>
+			</tr>
+		</table>
+	</p:outputPanel>
+
+	<p:blockUI block="loader" widgetVar="loaderBlock">  
+        Carregando...<br />  
+        <p:graphicImage value="/images/ajax-loader.gif"/>  
+    </p:blockUI>
+
+	<p:growl id="messages" globalOnly="true" />
+
+	<!-- <p:ajaxStatus onstart="loaderBlock.show()" oncomplete="loaderBlock.hide()" style="width:16px;height:16px;" /> -->
+</h:body>
+</html>

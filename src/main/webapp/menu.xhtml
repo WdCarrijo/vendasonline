@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:form >
+		<p:menubar rendered="#{securityContext.user.id != null}" >
+		
+			<p:submenu label="Cadastros">
+				<p:submenu label="Empresa" rendered="#{securityContext.hasRole('rof20004')}"  >
+					<p:menuitem value="Cadastrar Empresa" onclick="cadastroEmpresaDlg.show()" update=":cadastroEmpresaFormDlg" actionListener="#{empresaEditMB.limparDialog()}" >
+						<p:resetInput target=":cadastroEmpresaFormDlg" />  
+					</p:menuitem>
+					<p:menuitem value="Listar Empresa" url="/empresa/empresaList" ajax="false" />
+				</p:submenu>
+				<p:menuitem value="Cliente" onclick="cadastroClienteDlg.show()" update=":cadastroClienteFormDlg" actionListener="#{clienteEditMB.limparDialog()}" >
+					<p:resetInput target=":cadastroClienteFormDlg" />  
+				</p:menuitem>
+				<p:menuitem value="Produto" onclick="cadastroProdutoDlg.show()" update=":cadastroProdutoFormDlg" actionListener="#{produtoEditMB.limparDialog()}" >
+					<p:resetInput target=":cadastroProdutoFormDlg" />  
+				</p:menuitem>
+			</p:submenu>
+			
+			<p:menuitem value="Vendas" url="/vendas" />
+
+			<p:menuitem value="#{messages['menu.menuitem.quit']}" action="#{loginMB.doLogout}" />
+		</p:menubar>
+	</h:form>
+	
+	<p:dialog widgetVar="cadastroEmpresaDlg" header="Cadastro de Empresa" resizable="false" draggable="false"
+		width="550" height="240" modal="true" rendered="#{securityContext.user.id != null and securityContext.hasRole('rof20004')}" >
+		
+		<h:form id="cadastroEmpresaFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
+		
+			<h:panelGrid columns="3" >
+			
+				<p:outputLabel for="razaoSocial" value="Razão Social: " />
+				<p:inputText id="razaoSocial"    value="#{empresaEditMB.bean.razaoSocial}" size="40" requiredMessage="Razão Social obrigatório" required="true" />
+				<p:message for="razaoSocial" />
+				
+				<p:outputLabel for="cnpj" value="CNPJ: " />
+				<p:inputText id="cnpj"    value="#{empresaEditMB.bean.cnpj}" size="40" requiredMessage="CNPJ obrigatório" required="true" maxlength="14" />
+				<p:message for="cnpj" />
+				
+				<p:outputLabel for="telefone" value="Telefone: " />
+				<p:inputText id="telefone"    value="#{empresaEditMB.bean.telefone}" size="40" requiredMessage="Telefone obrigatório" required="true" />
+				<p:message for="telefone" />
+				
+				<p:outputLabel for="email" value="E-Mail: " />
+				<p:inputText id="email"    value="#{empresaEditMB.bean.email}" size="40" requiredMessage="E-Mail obrigatório" required="true" />
+				<p:message for="email" />
+				
+				<p:outputLabel for="login" value="Login: " />
+				<p:inputText id="login"    value="#{empresaEditMB.bean.login}" size="40" requiredMessage="Login obrigatório" required="true" />
+				<p:message for="login" />
+				
+				<p:outputLabel for="senha" value="Senha: " />
+				<p:password id="senha" value="#{empresaEditMB.bean.senha}" size="40" requiredMessage="Senha obrigatório" required="true" />
+				<p:message for="senha" />
+			
+			</h:panelGrid>
+
+			<h:outputText value="(*) Campos obrigatórios" />
+		
+			<div align="center">
+				<p:commandButton value="Salvar" action="#{empresaEditMB.insert}" update=":cadastroEmpresaFormDlg :messages" oncomplete="handleSaveEmpresa(xhr, status, args)" />
+			</div>
+		
+		</h:form>
+		
+	</p:dialog>
+
+	<p:dialog widgetVar="cadastroClienteDlg" header="Cadastro de Cliente" resizable="false" draggable="false"
+		width="520" height="175" modal="true" rendered="#{securityContext.user.id != null}" >
+		
+		<h:form id="cadastroClienteFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
+		
+			<h:panelGrid columns="3" >
+			
+				<p:outputLabel for="nome" value="Nome: " />
+				<p:inputText id="nome"    value="#{clienteEditMB.bean.nome}" size="40" requiredMessage="Nome obrigatório" required="true" />
+				<p:message for="nome" />
+				
+				<p:outputLabel for="endereco" value="Endereço: " />
+				<p:inputText id="endereco"    value="#{clienteEditMB.bean.endereco}" size="40" requiredMessage="Endereço obrigatório" required="true" />
+				<p:message for="endereco" />
+				
+				<p:outputLabel for="telefone" value="Telefone: " />
+				<p:inputText id="telefone"    value="#{clienteEditMB.bean.telefone}" requiredMessage="Telefone obrigatório" required="true" maxlength="8" >
+					<f:validateLength minimum="8" maximum="8" />
+				</p:inputText>
+				<p:message for="telefone" />
+				
+				<p:outputLabel for="complemento" value="Complemento: " />
+				<p:inputText id="complemento"    value="#{clienteEditMB.bean.complemento}" size="40" />
+			
+			</h:panelGrid>
+
+			<h:outputText value="(*) Campos obrigatórios" />
+		
+			<div align="center">
+				<p:commandButton value="Salvar" action="#{clienteEditMB.insert}" update=":cadastroClienteFormDlg, :messages" oncomplete="handleSaveCliente(xhr, status, args)" />
+			</div>
+		
+			<pe:keyFilter for="telefone" mask="int" />
+		
+		</h:form>
+		
+	</p:dialog>
+	
+	<p:dialog widgetVar="cadastroProdutoDlg" header="Cadastro de Produto" resizable="false" draggable="false"
+		width="520" height="120" modal="true" rendered="#{securityContext.user.id != null}" >
+		
+		<h:form id="cadastroProdutoFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
+		
+			<h:panelGrid columns="3" >
+			
+				<p:outputLabel for="descricao" value="Descrição: " />
+				<p:inputText id="descricao"    value="#{produtoEditMB.produtoDTO.descricao}" size="40" />
+				<p:message for="descricao" />
+				
+				<p:outputLabel for="preco" value="Preço: " />
+				<pe:inputNumber id="preco" value="#{produtoEditMB.produtoDTO.preco}" symbol="R$ " decimalPlaces="2" minValue="1" onkeypress="if (event.keyCode == 13) { executeSaveProduto(); return true; }" />
+				<p:message for="preco" />
+				
+			</h:panelGrid>
+		
+			<h:outputText value="(*) Campos obrigatórios" />
+		
+			<div align="center">
+				<p:commandButton value="Salvar" actionListener="#{produtoEditMB.insert}" update=":cadastroProdutoFormDlg, :messages" oncomplete="handleSaveProduto(xhr, status, args)" type="submit" validateClient="true" />
+			</div>
+
+		</h:form>
+		
+	</p:dialog>
+	
+	<p:confirmDialog header="Sucesso" message="Empresa cadastrada com sucesso." widgetVar="empresaSucessoDlg"  />
+	<p:confirmDialog header="Sucesso" message="Cliente cadastrado com sucesso." widgetVar="clienteSucessoDlg"  />
+	<p:confirmDialog header="Sucesso" message="Produto cadastrado com sucesso." widgetVar="produtoSucessoDlg" />
+	
+	<script type="text/javascript">
+	
+	function handleSaveEmpresa(xhr, status, args) {
+		if (args.resultado == 'sucesso') {
+			empresaSucessoDlg.show();
+			cadastroEmpresaDlg.hide();
+		} else {
+			cadastroEmpresaDlg.jq.effect("pulsate", { times:5 }, 100);  
+		}
+	}
+	
+	function handleSaveCliente(xhr, status, args) {
+		if (args.resultado == 'sucesso') {
+			clienteSucessoDlg.show();
+			cadastroClienteDlg.hide();
+		} else {
+			cadastroClienteDlg.jq.effect("pulsate", { times:5 }, 100);  
+		}
+	}
+	
+	function handleSaveProduto(xhr, status, args) {
+		if (args.resultado == 'sucesso') {
+			produtoSucessoDlg.show(); 
+			cadastroProdutoDlg.hide();
+		} else {
+			cadastroProdutoDlg.jq.effect("pulsate", { times:5 }, 100);  
+		}
+	}
+	
+	</script>
+
+</ui:composition>
