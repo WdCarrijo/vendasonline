@@ -4,9 +4,9 @@
 
 	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
 
-	<url-mapping id="index">
+	<url-mapping id="login">
 		<pattern value="/" />
-		<view-id value="/index.jsf" />
+		<view-id value="/login.jsf" />
 	</url-mapping>
 	
 	<url-mapping id="inicial">

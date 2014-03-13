@@ -8,7 +8,6 @@ import br.com.vendasonline.persistence.ClienteDAO;
 import br.com.vendasonline.security.Credentials;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
 
 @BusinessController
 public class ClienteBC extends DelegateCrud<Cliente, Long, ClienteDAO> {
@@ -21,7 +20,6 @@ public class ClienteBC extends DelegateCrud<Cliente, Long, ClienteDAO> {
 	@Inject
 	private Credentials credential;
 	
-	@Transactional
 	public Cliente insert(Cliente bean) {
 		bean.setId(null);
 		bean.setEmpresa(credential.getEmpresa());
@@ -33,7 +31,6 @@ public class ClienteBC extends DelegateCrud<Cliente, Long, ClienteDAO> {
 		return bean;
 	}
 	
-	@Transactional
 	public Cliente getByTelefone(String telefone) {
 		return dao.getByTelefone(telefone);
 	}

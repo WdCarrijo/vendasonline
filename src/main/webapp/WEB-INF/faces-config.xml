@@ -4,6 +4,6 @@
 
 <lifecycle>
    <phase-listener>br.com.vendasonline.security.LoginPhaseListener</phase-listener>
- </lifecycle>
+</lifecycle>
 
 </faces-config>

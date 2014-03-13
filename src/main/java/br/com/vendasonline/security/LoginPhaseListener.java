@@ -10,7 +10,7 @@ public class LoginPhaseListener implements PhaseListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String LOGIN_PAGE = "/index.xhtml";
+	private static final String LOGIN_PAGE = "/login.xhtml";
 
 	@Override
 	public void afterPhase(PhaseEvent event) {

@@ -37,6 +37,7 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 	}
 	
 	@Override
+	@Transactional
 	public String insert() {
 		RequestContext context = RequestContext.getCurrentInstance();
 		setBean(clienteBC.insert(getBean()));
