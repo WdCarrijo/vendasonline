@@ -16,12 +16,12 @@
 
 	<url-mapping id="vendas">
 		<pattern value="/vendas" />
-		<view-id value="/vendas.jsf" />
+		<view-id value="/pages/venda/vendas.jsf" />
 	</url-mapping>
 
 	<url-mapping id="empresaList">
 		<pattern value="/empresa/empresaList" />
-		<view-id value="/empresa_list.jsf" />
+		<view-id value="/pages/empresa/empresa_list.jsf" />
 	</url-mapping>
 
 	<!-- <url-mapping id="bookmark-edit">
