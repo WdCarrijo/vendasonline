@@ -34,7 +34,7 @@ public class EmpresaEditMB extends AbstractEditPageBean<Empresa, Long> {
 	@Override
 	@Transactional
 	public String delete() {
-		this.empresaBC.delete(getId());
+		empresaBC.delete(getId());
 		return getPreviousView();
 	}
 	
@@ -51,12 +51,12 @@ public class EmpresaEditMB extends AbstractEditPageBean<Empresa, Long> {
 	@Override
 	@Transactional
 	public String update() {
-		this.empresaBC.update(getBean());
+		empresaBC.update(getBean());
 		return getPreviousView();
 	}
 	
 	protected void handleLoad() {
-		setBean(this.empresaBC.load(getId()));
+		setBean(empresaBC.load(getId()));
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class EmpresaEditMB extends AbstractEditPageBean<Empresa, Long> {
 	@Transactional
 	public String remover(Empresa empresa) {
 		empresa.setSituacao(Constantes.STATUS_INATIVO);
-		this.empresaBC.update(empresa);
+		empresaBC.update(empresa);
 		return getCurrentView();
 	}
 	

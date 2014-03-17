@@ -9,7 +9,6 @@ import br.com.vendasonline.domain.Empresa;
 import br.com.vendasonline.persistence.EmpresaDAO;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
 
 @BusinessController
 public class EmpresaBC extends DelegateCrud<Empresa, Long, EmpresaDAO> {
@@ -19,7 +18,6 @@ public class EmpresaBC extends DelegateCrud<Empresa, Long, EmpresaDAO> {
 	@Inject
 	private EmpresaDAO dao;
 	
-	@Transactional
 	public Empresa insert(Empresa bean) {
 		try {
 			bean.setId(null);

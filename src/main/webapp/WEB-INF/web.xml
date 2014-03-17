@@ -76,6 +76,11 @@
         <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
         <param-value>true</param-value>
     </context-param>
+    
+    <context-param>
+	    <param-name>javax.faces.RESOURCE_EXCLUDES</param-name>
+	    <param-value>.xhtml .class .jsp .jspx .properties .xml</param-value>
+	</context-param>
 
 	<!-- <context-param>
 		<param-name>com.sun.faces.numberOfViewsInSession</param-name>

@@ -8,13 +8,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import br.com.vendasonline.domain.Empresa;
-import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
 
-@RunWith(DemoiselleRunner.class)
 public class EmpresaBCTest {
 
     @Inject
@@ -27,21 +23,18 @@ public class EmpresaBCTest {
 		}
 	}	
 
-
-	@Test
 	public void testInsert() {
 
-		Empresa empresa = getEmpresa();
+		Empresa empresa = getEmpresaAdd();
 		empresaBC.insert(empresa);
 		List<Empresa> listOfEmpresa = empresaBC.findAll();
 		assertNotNull(listOfEmpresa);
 		assertEquals(1, listOfEmpresa.size());
 	}	
 
-	@Test
 	public void testDelete() {
 
-		Empresa empresa = getEmpresa();
+		Empresa empresa = getEmpresaAdd();
 		empresaBC.insert(empresa);
 
 		List<Empresa> listOfEmpresa = empresaBC.findAll();
@@ -53,23 +46,17 @@ public class EmpresaBCTest {
 		assertEquals(0, listOfEmpresa.size());
 	}
 
-	@Test
 	public void testUpdate() {
 
-		Empresa empresa = getEmpresa();
+		Empresa empresa = getEmpresaAdd();
 		empresaBC.insert(empresa);
 
 		List<Empresa> listOfEmpresa = empresaBC.findAll();
 		Empresa empresa2 = (Empresa)listOfEmpresa.get(0);
 		assertNotNull(listOfEmpresa);
 
-		try {
-			empresa2.setRazaoSocial("novo valor");
-			empresaBC.update(empresa2);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		empresa2.setRazaoSocial("novo valor");
+		empresaBC.update(empresa2);
 
 		listOfEmpresa = empresaBC.findAll();
 		Empresa empresa3 = (Empresa)listOfEmpresa.get(0);
@@ -77,10 +64,10 @@ public class EmpresaBCTest {
 		assertEquals("novo valor", empresa3.getRazaoSocial());
 	}
 
-	private Empresa getEmpresa() {
+	private Empresa getEmpresaAdd() {
 		Empresa empresa  = new Empresa();
 		empresa.setRazaoSocial("Razão Social");
-		empresa.setCnpj(null);
+		empresa.setCnpj("123");
 		empresa.setTelefone("88320387");
 		empresa.setEmail("rof20004@gmail.com");
 		empresa.setLogin("teste");
