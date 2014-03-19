@@ -49,7 +49,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>south-street</artifactId>
+			<artifactId>home</artifactId>
 			<version>1.0.10</version>
 		</dependency>
 		<dependency>

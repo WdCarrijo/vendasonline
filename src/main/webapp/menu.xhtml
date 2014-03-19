@@ -29,7 +29,7 @@
 	</h:form>
 	
 	<p:dialog widgetVar="cadastroEmpresaDlg" header="Cadastro de Empresa" resizable="false" draggable="false"
-		width="550" height="240" modal="true" rendered="#{securityContext.user.id != null and securityContext.hasRole('rof20004')}" >
+		width="600" height="240" modal="true" rendered="#{securityContext.user.id != null and securityContext.hasRole('rof20004')}" >
 		
 		<h:form id="cadastroEmpresaFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
 		
@@ -72,7 +72,7 @@
 	</p:dialog>
 
 	<p:dialog widgetVar="cadastroClienteDlg" header="Cadastro de Cliente" resizable="false" draggable="false"
-		width="520" height="175" modal="true" rendered="#{securityContext.user.id != null}" >
+		width="600" height="175" modal="true" rendered="#{securityContext.user.id != null}" >
 		
 		<h:form id="cadastroClienteFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
 		
@@ -110,7 +110,7 @@
 	</p:dialog>
 	
 	<p:dialog widgetVar="cadastroProdutoDlg" header="Cadastro de Produto" resizable="false" draggable="false"
-		width="520" height="120" modal="true" rendered="#{securityContext.user.id != null}" >
+		width="600" height="120" modal="true" rendered="#{securityContext.user.id != null}" >
 		
 		<h:form id="cadastroProdutoFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
 		
