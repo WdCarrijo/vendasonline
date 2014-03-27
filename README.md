@@ -4,6 +4,5 @@ vendasonline
 Sistema de controle de vendas baseadas em número telefônico do cliente.
 
 <ul>
-  <li>Clica aqui caboco</li>
-  <li><a href="#">Fala caboco</a></li
+  <li><a href="http://www.google.com.br">Clique aqui para saber onde procurar códigos fenomenais</a></li>
 </ul>
