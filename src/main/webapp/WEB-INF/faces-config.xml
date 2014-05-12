@@ -6,4 +6,8 @@
    <phase-listener>br.com.vendasonline.security.LoginPhaseListener</phase-listener>
 </lifecycle>
 
+<lifecycle>
+	<phase-listener>br.com.christ.jsf.html2pdf.listener.Html2PDFPhaseListener</phase-listener>
+</lifecycle>
+
 </faces-config>

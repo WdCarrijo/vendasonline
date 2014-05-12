@@ -65,8 +65,8 @@ public class EmpresaEditMB extends AbstractEditPageBean<Empresa, Long> {
 		return null;
 	}
 
-	public void limparDialog() {
-		RequestContext.getCurrentInstance().reset("cadastroClienteFormDlg");
+	public void limparDialog(String idFormDialog) {
+		RequestContext.getCurrentInstance().reset(idFormDialog);
 		setBean(new Empresa());
 	}
 	

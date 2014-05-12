@@ -6,7 +6,8 @@
 	<!--
 	-->
 	<persistence-unit name="vendasonline">
-		<non-jta-data-source>java:comp/env/jdbc/vendasonline</non-jta-data-source>
+		<!-- <non-jta-data-source>java:comp/env/jdbc/vendasonline</non-jta-data-source> -->
+		<non-jta-data-source>java:jboss/datasources/VendasOnlineDS</non-jta-data-source>		
 
 		<class>br.com.vendasonline.domain.Cliente</class>
 		<class>br.com.vendasonline.domain.Empresa</class>

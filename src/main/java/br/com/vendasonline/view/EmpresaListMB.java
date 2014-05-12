@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import lombok.Getter;
 import lombok.Setter;
+import br.com.christ.jsf.html2pdf.listener.PDFConverterConfig;
 import br.com.vendasonline.business.EmpresaBC;
 import br.com.vendasonline.constant.Constantes;
 import br.com.vendasonline.domain.Empresa;
@@ -34,6 +35,9 @@ public class EmpresaListMB extends AbstractListPageBean<Empresa, Long> {
 	@Setter
 	private List<Empresa> empresas = new ArrayList<Empresa>();
 	
+	@Inject
+	private PDFConverterConfig pdfConverterConfig;
+	
 	@Override
 	protected List<Empresa> handleResultList() {
 		return this.empresaBC.findAll();
@@ -56,6 +60,12 @@ public class EmpresaListMB extends AbstractListPageBean<Empresa, Long> {
 	@PostConstruct
 	public void getListEmpresa() {
 		empresas = empresaBC.listPorSituacao(Constantes.STATUS_ATIVO);
+	}
+	
+	public String gerarRelatorio() {
+		pdfConverterConfig.setEnablePdf(true);
+		pdfConverterConfig.setPreloadResources(true);
+		return getPreviousView();
 	}
 
 }

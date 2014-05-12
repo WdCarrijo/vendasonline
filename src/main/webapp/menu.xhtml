@@ -2,17 +2,17 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions" >
 
 	<h:form >
 		<p:menubar rendered="#{securityContext.user.id != null}" >
 		
 			<p:submenu label="Cadastros">
 				<p:submenu label="Empresa" rendered="#{securityContext.hasRole('rof20004')}"  >
-					<p:menuitem value="Cadastrar Empresa" onclick="cadastroEmpresaDlg.show()" update=":cadastroEmpresaFormDlg" actionListener="#{empresaEditMB.limparDialog()}" >
+					<p:menuitem value="Cadastrar Empresa" onclick="cadastroEmpresaDlg.show()" update=":cadastroEmpresaFormDlg" actionListener="#{empresaEditMB.limparDialog('cadastroEmpresaFormDlg')}" >
 						<p:resetInput target=":cadastroEmpresaFormDlg" />  
 					</p:menuitem>
-					<p:menuitem value="Listar Empresa" url="/empresa/empresaList" ajax="false" />
+					<p:menuitem value="Listar Empresa" action="#{empresaListMB.gerarRelatorio}" />
 				</p:submenu>
 				<p:menuitem value="Cliente" onclick="cadastroClienteDlg.show()" update=":cadastroClienteFormDlg" actionListener="#{clienteEditMB.limparDialog()}" >
 					<p:resetInput target=":cadastroClienteFormDlg" />  
@@ -23,6 +23,10 @@
 			</p:submenu>
 			
 			<p:menuitem value="Vendas" url="/vendas" />
+			
+			<p:menuitem value="Relatórios" onclick="relatorioVendasDlg.show()" update=":relatorioVendasFormDlg" actionListener="#{empresaEditMB.limparDialog('relatorioVendasFormDlg')}" >
+				<p:resetInput target=":relatorioVendasFormDlg" />  
+			</p:menuitem>
 
 			<p:menuitem value="#{messages['menu.menuitem.quit']}" action="#{loginMB.doLogout}" />
 		</p:menubar>
@@ -129,7 +133,52 @@
 			<h:outputText value="(*) Campos obrigatórios" />
 		
 			<div align="center">
-				<p:commandButton value="Salvar" actionListener="#{produtoEditMB.insert}" update=":cadastroProdutoFormDlg, :messages" oncomplete="handleSaveProduto(xhr, status, args)" type="submit" validateClient="true" />
+				<p:commandButton value="Salvar" actionListener="#{produtoEditMB.insert}" update=":cadastroProdutoFormDlg, :messages" oncomplete="handleSaveProduto(xhr, status, args)" validateClient="true" />
+			</div>
+
+		</h:form>
+		
+	</p:dialog>
+	
+	<p:dialog widgetVar="relatorioVendasDlg" header="Relatório de Vendas por Período" resizable="false" draggable="false"
+		width="620" height="250" modal="true" rendered="#{securityContext.user.id != null}" >
+
+		<h:form id="relatorioVendasFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
+		
+			<h:panelGrid columns="3" >
+			
+				<p:outputLabel for="dtInicio" value="De: " />
+				<p:calendar style="width: 135px;" id="dtInicio" effect="fadeIn"
+                                                mode="popup" showButtonPanel="true" pages="1"
+                                                locale="#{currentLocale}" autocomplete="false"
+                                                required="true" showOn="button" pattern="dd/MM/yyyy"
+                                                navigator="true" requiredMessage="Preenchimento é obrigatório" converter="dateConverter" />
+				<p:message for="dtInicio" />
+				
+				<p:outputLabel for="dtFim" value="Até: " />
+				<p:calendar style="width: 135px;" id="dtFim" effect="fadeIn"
+                                                mode="popup" showButtonPanel="true" pages="1"
+                                                locale="#{currentLocale}" autocomplete="false"
+                                                required="true" showOn="button" pattern="dd/MM/yyyy"
+                                                navigator="true" requiredMessage="Preenchimento é obrigatório" converter="dateConverter" />
+				<p:message for="dtFim" />
+				
+			</h:panelGrid>
+			
+			<p:fieldset legend="Tipos de Vendas" >
+				<h:panelGrid columns="4" >
+					<!-- <p:outputLabel for="chkFinalizada" value="Finalizadas" />
+					<p:selectBooleanCheckbox id="chkFinalizada" value="#{relatorioMB.chkFinalizada}" />
+					
+					<p:outputLabel for="chkCancelada" value="Canceladas" />
+					<p:selectBooleanCheckbox id="chkCancelada" value="#{relatorioMB.chkCancelada}" /> -->
+				</h:panelGrid>
+			</p:fieldset>
+		
+			<h:outputText value="(*) Campos obrigatórios" />
+		
+			<div align="center">
+				<p:commandButton value="Gerar Relatório" update=":relatorioVendasFormDlg :messages" actionListener="#{reltorioMB.imprimiChecks}" oncomplete="handleGerarRelatorio(xhr, status, args)" validateClient="true" />
 			</div>
 
 		</h:form>
@@ -141,7 +190,7 @@
 	<p:confirmDialog header="Sucesso" message="Produto cadastrado com sucesso." widgetVar="produtoSucessoDlg" />
 	
 	<script type="text/javascript">
-	
+
 	function handleSaveEmpresa(xhr, status, args) {
 		if (args.resultado == 'sucesso') {
 			empresaSucessoDlg.show();
@@ -166,6 +215,14 @@
 			cadastroProdutoDlg.hide();
 		} else {
 			cadastroProdutoDlg.jq.effect("pulsate", { times:5 }, 100);  
+		}
+	}
+	
+	function handleGerarRelatorio(xhr, status, args) {
+		if (args.resultado == 'sucesso') {
+			relatorioVendasDlg.show(); 
+		} else {
+			relatorioVendasDlg.jq.effect("pulsate", { times:5 }, 100);  
 		}
 	}
 	
