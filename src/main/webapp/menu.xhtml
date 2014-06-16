@@ -12,7 +12,7 @@
 					<p:menuitem value="Cadastrar Empresa" onclick="cadastroEmpresaDlg.show()" update=":cadastroEmpresaFormDlg" actionListener="#{empresaEditMB.limparDialog('cadastroEmpresaFormDlg')}" >
 						<p:resetInput target=":cadastroEmpresaFormDlg" />  
 					</p:menuitem>
-					<p:menuitem value="Listar Empresa" action="#{empresaListMB.gerarRelatorio}" />
+					<p:menuitem value="Listar Empresa" url="empresa/empresaList" />
 				</p:submenu>
 				<p:menuitem value="Cliente" onclick="cadastroClienteDlg.show()" update=":cadastroClienteFormDlg" actionListener="#{clienteEditMB.limparDialog()}" >
 					<p:resetInput target=":cadastroClienteFormDlg" />  
@@ -83,28 +83,28 @@
 			<h:panelGrid columns="3" >
 			
 				<p:outputLabel for="nome" value="Nome: " />
-				<p:inputText id="nome"    value="#{clienteEditMB.bean.nome}" size="40" requiredMessage="Nome obrigatório" required="true" />
+				<p:inputText id="nome"    value="#{clienteEditMB.clienteDTO.nome}" size="40" requiredMessage="Nome obrigatório" required="true" />
 				<p:message for="nome" />
 				
 				<p:outputLabel for="endereco" value="Endereço: " />
-				<p:inputText id="endereco"    value="#{clienteEditMB.bean.endereco}" size="40" requiredMessage="Endereço obrigatório" required="true" />
+				<p:inputText id="endereco"    value="#{clienteEditMB.clienteDTO.endereco}" size="40" requiredMessage="Endereço obrigatório" required="true" />
 				<p:message for="endereco" />
 				
 				<p:outputLabel for="telefone" value="Telefone: " />
-				<p:inputText id="telefone"    value="#{clienteEditMB.bean.telefone}" requiredMessage="Telefone obrigatório" required="true" maxlength="8" >
+				<p:inputText id="telefone"    value="#{clienteEditMB.clienteDTO.telefone.numero}" requiredMessage="Telefone obrigatório" required="true" maxlength="8" >
 					<f:validateLength minimum="8" maximum="8" />
 				</p:inputText>
 				<p:message for="telefone" />
 				
 				<p:outputLabel for="complemento" value="Complemento: " />
-				<p:inputText id="complemento"    value="#{clienteEditMB.bean.complemento}" size="40" />
+				<p:inputText id="complemento"    value="#{clienteEditMB.clienteDTO.complemento}" size="40" />
 			
 			</h:panelGrid>
 
 			<h:outputText value="(*) Campos obrigatórios" />
 		
 			<div align="center">
-				<p:commandButton value="Salvar" action="#{clienteEditMB.insert}" update=":cadastroClienteFormDlg, :messages" oncomplete="handleSaveCliente(xhr, status, args)" />
+				<p:commandButton value="Salvar" action="#{clienteEditMB.insert}" update=":cadastroClienteFormDlg, :messages" oncomplete="handleSaveCliente(xhr, status, args)" validateClient="true" />
 			</div>
 		
 			<pe:keyFilter for="telefone" mask="int" />
@@ -152,7 +152,7 @@
                                                 mode="popup" showButtonPanel="true" pages="1"
                                                 locale="#{currentLocale}" autocomplete="false"
                                                 required="true" showOn="button" pattern="dd/MM/yyyy"
-                                                navigator="true" requiredMessage="Preenchimento é obrigatório" converter="dateConverter" />
+                                                navigator="true" requiredMessage="Preenchimento é obrigatório" converter="dateConverter" value="#{relatorioEmpresaMB.dataInicio}" />
 				<p:message for="dtInicio" />
 				
 				<p:outputLabel for="dtFim" value="Até: " />
@@ -160,25 +160,25 @@
                                                 mode="popup" showButtonPanel="true" pages="1"
                                                 locale="#{currentLocale}" autocomplete="false"
                                                 required="true" showOn="button" pattern="dd/MM/yyyy"
-                                                navigator="true" requiredMessage="Preenchimento é obrigatório" converter="dateConverter" />
+                                                navigator="true" requiredMessage="Preenchimento é obrigatório" converter="dateConverter" value="#{relatorioEmpresaMB.dataFim}" />
 				<p:message for="dtFim" />
 				
 			</h:panelGrid>
 			
-			<p:fieldset legend="Tipos de Vendas" >
+			<p:fieldset legend="Tipo de Impressão" >
 				<h:panelGrid columns="4" >
-					<!-- <p:outputLabel for="chkFinalizada" value="Finalizadas" />
-					<p:selectBooleanCheckbox id="chkFinalizada" value="#{relatorioMB.chkFinalizada}" />
-					
-					<p:outputLabel for="chkCancelada" value="Canceladas" />
-					<p:selectBooleanCheckbox id="chkCancelada" value="#{relatorioMB.chkCancelada}" /> -->
+					<p:selectOneRadio id="tipoImpressao" value="#{relatorioVendaMB.tipoImpressao}" required="true" requiredMessage="Preenchimento obrigatório"  >
+						<f:selectItem itemLabel="Finalizadas" itemValue="F" />
+						<f:selectItem itemLabel="Canceladas" itemValue="C"  />
+					</p:selectOneRadio>
+					<p:messages for="tipoImpressao" />
 				</h:panelGrid>
 			</p:fieldset>
-		
+			
 			<h:outputText value="(*) Campos obrigatórios" />
 		
 			<div align="center">
-				<p:commandButton value="Gerar Relatório" update=":relatorioVendasFormDlg :messages" actionListener="#{reltorioMB.imprimiChecks}" oncomplete="handleGerarRelatorio(xhr, status, args)" validateClient="true" />
+				<p:commandButton value="Gerar Relatório" update=":relatorioVendasFormDlg :messages" actionListener="#{relatorioVendaMB.gerarRelatorio}" oncomplete="handleGerarRelatorio(xhr, status, args)" validateClient="true" ajax="false" />
 			</div>
 
 		</h:form>

@@ -17,7 +17,7 @@ public class ClienteDAO extends JPACrud<Cliente, Long> {
 	
 	public Cliente getByTelefone(String telefone) {
 		try {
-			return (Cliente)createQuery("SELECT cliente FROM Cliente cliente WHERE cliente.telefone = :telefone AND cliente.empresa.id = :idEmpresa ")
+			return (Cliente)createQuery("SELECT cliente FROM Cliente cliente WHERE cliente.telefone.numero = :telefone AND cliente.empresa.id = :idEmpresa ")
 					.setParameter("telefone", telefone)
 					.setParameter("idEmpresa", credential.getEmpresa().getId())
 					.getSingleResult();

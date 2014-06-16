@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import br.com.vendasonline.domain.Empresa;
 
@@ -23,6 +24,7 @@ public class EmpresaBCTest {
 		}
 	}	
 
+	@Test
 	public void testInsert() {
 
 		Empresa empresa = getEmpresaAdd();
@@ -68,7 +70,7 @@ public class EmpresaBCTest {
 		Empresa empresa  = new Empresa();
 		empresa.setRazaoSocial("Razão Social");
 		empresa.setCnpj("123");
-		empresa.setTelefone("88320387");
+		empresa.getTelefone().setNumero("8832-0387");
 		empresa.setEmail("rof20004@gmail.com");
 		empresa.setLogin("teste");
 		empresa.setSenha("123");

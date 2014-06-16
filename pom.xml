@@ -20,14 +20,6 @@
 		<version>2.4.0-RC1</version>
 	</parent>
 	
-	<repositories>
-		<repository>
-		    <id>html2pdflistener.repo</id>
-		    <name>html2pdflistener.repo</name>
-		    <url>https://raw.github.com/joaomc/html2pdflistener-repo/master/repository/</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle</groupId>
@@ -132,9 +124,9 @@
 		    <version>2.1.0</version>
 		</dependency>
 		<dependency>
-		    <groupId>br.com.christ.jsf</groupId>
-		    <artifactId>html2pdflistener</artifactId>
-		    <version>1.2.4</version>
-		</dependency>
-	</dependencies>
+   			<groupId>net.sf.jasperreports</groupId>
+    		<artifactId>jasperreports</artifactId>
+    		<version>5.5.2</version>
+			</dependency>
+		</dependencies>
 </project>

@@ -3,12 +3,14 @@ package br.com.vendasonline.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,6 +19,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
+@Table(name = "cliente")
 @Getter
 @Setter
 @EqualsAndHashCode(of={"id"})
@@ -34,8 +37,8 @@ public class Cliente implements Serializable {
 	@Column(name = "endereco", nullable = false)
 	private String endereco;
 
-	@Column(name = "telefone", nullable = false, length = 8)
-	private String telefone;
+	@Embedded
+	private Telefone telefone;
 
 	@Column(name = "complemento")
 	private String complemento;
@@ -45,25 +48,7 @@ public class Cliente implements Serializable {
 	@ForeignKey(name = "empresa_id_fk")
 	private Empresa empresa;
 	
-	@Column(name = "situacao", nullable = false)
+	@Column(name = "situacao", nullable = false, length = 1)
 	private String situacao;
-
-	public boolean validaDadosCliente() {
-		boolean retorno = true;
-		
-		if (nome == null || "".equals(nome)) {
-			retorno = false;
-		}
-		
-		if (endereco == null || "".equals(endereco)) {
-			retorno = false;
-		}
-		
-		if (telefone == null || "".equals(telefone)) {
-			retorno = false;
-		}
-		
-		return retorno;
-	}
 
 }

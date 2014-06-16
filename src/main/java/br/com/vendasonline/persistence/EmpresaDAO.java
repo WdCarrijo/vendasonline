@@ -25,8 +25,8 @@ public class EmpresaDAO extends JPACrud<Empresa, Long> {
 	@SuppressWarnings("unchecked")
 	public List<Empresa> listPorSituacao(String situacao) {
 		try {
-			return (List<Empresa>)createQuery("SELECT empresa FROM Empresa empresa")
-					//.setParameter("situacao", situacao)
+			return (List<Empresa>)createQuery("SELECT empresa FROM Empresa empresa WHERE empresa.situacao = :situacao")
+					.setParameter("situacao", situacao)
 					.getResultList();
 		} catch (Exception e) {
 			return null;

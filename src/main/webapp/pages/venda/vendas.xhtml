@@ -8,45 +8,44 @@
 	
 		<h:form id="principal" onkeypress="if (event.keyCode == 13) {return false}" >
 		
-			<h:panelGrid columns="2"  >
-				<p:fieldset legend="Dados do Cliente" style="width: 120%;margin-bottom: 105px;"  >
+			<p:fieldset legend="Dados do Cliente" style="float: left; width: 30%;"  >
+			
+				<p:outputLabel value="Telefone: " for="telefoneCliente" />
+				<p:inputMask mask="9999-9999" id="telefoneCliente" value="#{vendaEditMB.telefone}" disabled="#{not empty vendaEditMB.cliente.id}" />
+				<p:commandButton value="Pesquisar" actionListener="#{vendaEditMB.pesquisarCliente}" update="@form" rendered="#{empty vendaEditMB.cliente.id}" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />
+				<p:commandButton value="Novo Cliente" actionListener="#{vendaEditMB.limparCliente}" update="@form" rendered="#{not empty vendaEditMB.cliente.id}" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />
+			
+				<br/>
+				<br/>
+			
+				<h:panelGrid columns="2" id="gridDadosCliente" >
 				
-					<p:outputLabel value="Telefone: " for="telefoneCliente" />
-					<p:inputMask mask="9999-9999" id="telefoneCliente" value="#{vendaEditMB.telefone}" disabled="#{not empty vendaEditMB.cliente.id}" />
-					<p:commandButton value="Pesquisar" actionListener="#{vendaEditMB.pesquisarCliente}" update="@form" rendered="#{empty vendaEditMB.cliente.id}" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />
-					<p:commandButton value="Novo Cliente" actionListener="#{vendaEditMB.limparCliente}" update="@form" rendered="#{not empty vendaEditMB.cliente.id}" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />
-				
-					<br/>
-					<br/>
-				
-					<h:panelGrid columns="2" id="gridDadosCliente" >
+					<h:outputText value="Nome: " style="font-weight: bold;" />
+					<h:outputText value="#{vendaEditMB.cliente.nome}" style="color: blue;" />
 					
-						<h:outputText value="Nome: " style="font-weight: bold;" />
-						<h:outputText value="#{vendaEditMB.cliente.nome}" style="color: blue;" />
-						
-						<h:outputText value="Endereço: " style="font-weight: bold;" />
-						<h:outputText value="#{vendaEditMB.cliente.endereco}" style="color: blue;" />
-						
-						<h:outputText value="Complemento: " style="font-weight: bold;" />
-						<h:outputText value="#{vendaEditMB.cliente.complemento}" style="color: blue;" />
+					<h:outputText value="Endereço: " style="font-weight: bold;" />
+					<h:outputText value="#{vendaEditMB.cliente.endereco}" style="color: blue;" />
 					
-						<h:outputText value="Telefone: " style="font-weight: bold;" />
-						<h:outputText value="#{vendaEditMB.cliente.telefone}" style="color: blue;" />
-					
-					</h:panelGrid>
+					<h:outputText value="Complemento: " style="font-weight: bold;" />
+					<h:outputText value="#{vendaEditMB.cliente.complemento}" style="color: blue;" />
 				
-				</p:fieldset>
+					<h:outputText value="Telefone: " style="font-weight: bold;" />
+					<h:outputText value="#{vendaEditMB.cliente.telefone.numeroFormatado}" style="color: blue;" />
 				
-				<p:fieldset legend="Total Geral da Venda" style="width: 700px;margin-left: 100px; margin-bottom: 122px;" rendered="#{not empty vendaEditMB.cliente.id}" >
+				</h:panelGrid>
+			
+			</p:fieldset>
+			
+			<p:fieldset legend="Total Geral da Venda" style="width: 700px; float: right;" rendered="#{not empty vendaEditMB.cliente.id}" >
 				
-					<h:outputText value="#{vendaEditMB.totalGeral}" style="color: blue;font-weight: bold; font-size: 90px;margin-left: 200px;">
-						<f:convertNumber currencySymbol="R$" type="currency" />
-					</h:outputText>
-				
-				</p:fieldset>
-			</h:panelGrid>
+				<h:outputText value="#{vendaEditMB.totalGeral}" style="color: blue;font-weight: bold; font-size: 90px;">
+					<f:convertNumber currencySymbol="R$" type="currency" />
+				</h:outputText>
+			
+			</p:fieldset>
 			
 			<div class="clear"></div>
+			<p:spacer height="115" ></p:spacer>
 			
 			<div align="center">
 				<p:commandButton value="Incluir Produto" styleClass="btnIncluir" actionListener="#{vendaEditMB.carregaProdutos}" update=":pesquisaProdutoForm" rendered="#{not empty vendaEditMB.cliente.id}" onstart="loaderBlock.show();" oncomplete="pesquisaProdutoDlg.show();" />
@@ -123,7 +122,7 @@
 						</p:column>
 						
 						<p:column headerText="Quantidade" >
-							<p:inputText id="quantidadeProduto" value="#{produto.quantidade}" />
+							<p:inputText id="quantidadeProduto" value="#{produto.quantidade}" maxlength="3" />
 							<pe:keyFilter for="quantidadeProduto" mask="int" />
 						</p:column>
 						

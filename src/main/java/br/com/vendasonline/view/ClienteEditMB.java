@@ -4,13 +4,17 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.persistence.RollbackException;
 
+import lombok.Getter;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 
 import br.com.vendasonline.business.ClienteBC;
+import br.com.vendasonline.constant.Constantes;
 import br.com.vendasonline.domain.Cliente;
 import br.com.vendasonline.util.Mensagens;
+import br.com.vendasonline.validators.ClienteValidationBean;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
 import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
@@ -29,6 +33,9 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 	@Inject
 	private ClienteBC clienteBC;
 	
+	@Getter
+	private ClienteValidationBean clienteDTO = new ClienteValidationBean();
+	
 	@Override
 	@Transactional
 	public String delete() {
@@ -40,7 +47,17 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 	@Transactional
 	public String insert() {
 		RequestContext context = RequestContext.getCurrentInstance();
-		setBean(clienteBC.insert(getBean()));
+		
+		Cliente cliente = new Cliente();
+		cliente.setNome(clienteDTO.getNome());
+		cliente.setEndereco(clienteDTO.getEndereco());
+		cliente.setTelefone(clienteDTO.getTelefone());
+		
+		if (clienteDTO.getComplemento() != null && !clienteDTO.getComplemento().equals(Constantes.STRING_VAZIA)) {
+			cliente.setComplemento(clienteDTO.getNome());
+		}
+		
+		setBean(clienteBC.insert(cliente));
 		context.addCallbackParam("resultado", "sucesso");
 		return getCurrentView();
 	}
