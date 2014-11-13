@@ -5,6 +5,9 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import br.com.vendasonline.constant.Constantes;
 import br.com.vendasonline.util.Util;
 
 @Embeddable
@@ -12,6 +15,7 @@ public class Telefone implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@NotBlank(message = "Telefone obrigatório")
 	@Column(name = "telefone", nullable = false)
 	private String numero;
 
@@ -20,7 +24,7 @@ public class Telefone implements Serializable {
 	}
 
 	public void setNumero(String numero) {
-		this.numero = numero.replace(" ", "").replace("(", "").replace(")", "").replace("-", "");
+		this.numero = numero.replace(" ", Constantes.STRING_VAZIA).replace("(", Constantes.STRING_VAZIA).replace(")", Constantes.STRING_VAZIA).replace("-", Constantes.STRING_VAZIA);
 	}
 	
 	/**
@@ -29,7 +33,7 @@ public class Telefone implements Serializable {
 	 * Telefone (XX) XXXX-XXXX ou (XX) XXXXX-XXXX
 	 */
 	public String getNumeroFormatado() {
-		String telefone = "";
+		String telefone = Constantes.STRING_VAZIA;
 		
 		if (Util.isNull(this.numero)) {
 			return null;

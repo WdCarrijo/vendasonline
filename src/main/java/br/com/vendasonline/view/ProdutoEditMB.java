@@ -6,6 +6,7 @@ import javax.persistence.RollbackException;
 
 import lombok.Getter;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 
@@ -47,8 +48,13 @@ public class ProdutoEditMB extends AbstractEditPageBean<Produto, Long> {
 		RequestContext context = RequestContext.getCurrentInstance();
 		
 		Produto produto = new Produto();
-		produto.setDescricao(produtoDTO.getDescricao());
-		produto.setPreco(produtoDTO.getPreco());
+		try {
+			BeanUtils.copyProperties(produto, produtoDTO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		produto = produtoBC.insert(produto);
 		
 		if (produto.getDescricao() == null && produto.getPreco() == null) {

@@ -31,10 +31,10 @@ public class ProdutoBC extends DelegateCrud<Produto, Long, ProdutoDAO> {
 			bean.setSituacao(Constantes.STATUS_ATIVO);
 			bean.setEmpresa(credential.getEmpresa());
 			dao.insert(bean);
+			return new Produto();
 		} catch (Exception e) {
 			return bean;
 		}
-		return new Produto();
 	}
 	
 	@Transactional

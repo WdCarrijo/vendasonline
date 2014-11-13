@@ -2,17 +2,18 @@ package br.com.vendasonline.view;
 
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
-import javax.persistence.RollbackException;
 
 import lombok.Getter;
 
-import org.hibernate.exception.ConstraintViolationException;
+import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 
 import br.com.vendasonline.business.ClienteBC;
 import br.com.vendasonline.constant.Constantes;
 import br.com.vendasonline.domain.Cliente;
+import br.com.vendasonline.exception.ClienteJaExistenteException;
+import br.com.vendasonline.exception.ErroGenericoException;
 import br.com.vendasonline.util.Mensagens;
 import br.com.vendasonline.validators.ClienteValidationBean;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
@@ -49,15 +50,18 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 		RequestContext context = RequestContext.getCurrentInstance();
 		
 		Cliente cliente = new Cliente();
-		cliente.setNome(clienteDTO.getNome());
-		cliente.setEndereco(clienteDTO.getEndereco());
-		cliente.setTelefone(clienteDTO.getTelefone());
+		try {
+			BeanUtils.copyProperties(cliente, clienteDTO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		if (clienteDTO.getComplemento() != null && !clienteDTO.getComplemento().equals(Constantes.STRING_VAZIA)) {
+		if (clienteDTO.getComplemento() != null && !clienteDTO.getComplemento().trim().equals(Constantes.STRING_VAZIA)) {
 			cliente.setComplemento(clienteDTO.getNome());
 		}
 		
-		setBean(clienteBC.insert(cliente));
+		clienteBC.salvar(cliente);
 		context.addCallbackParam("resultado", "sucesso");
 		return getCurrentView();
 	}
@@ -76,24 +80,24 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 	}
 	
 	@ExceptionHandler
-	public void excecoes(RollbackException e) {
+	public void excecoes(ClienteJaExistenteException e) {
 		RequestContext context = RequestContext.getCurrentInstance();
-		Throwable t = e.getCause();
-		while ((t != null) && !(t instanceof ConstraintViolationException)) {
-	        t = t.getCause();
-	    }
-		if (t instanceof ConstraintViolationException) {
-			Mensagens.exibeMensagemGrowlSemDetalhe(FacesMessage.SEVERITY_ERROR, "Já existe cliente cadastrado com o telefone informado.");
-		} else {
-			Mensagens.exibeMensagemGrowlSemDetalhe(FacesMessage.SEVERITY_ERROR, "Erro ao salvar cliente. Contate o administrador.");
-		}
+		Mensagens.exibeMensagemGrowlSemDetalhe(FacesMessage.SEVERITY_ERROR, "Já existe cliente cadastrado com o telefone informado.");
+		context.addCallbackParam("resultado", "erro");
+		logger.error("Ocorreu um erro: " + e.getCause());
+	}
+	
+	@ExceptionHandler
+	public void excecoes(ErroGenericoException e) {
+		RequestContext context = RequestContext.getCurrentInstance();
+		Mensagens.exibeMensagemGrowlSemDetalhe(FacesMessage.SEVERITY_ERROR, "Erro ao salvar cliente. Contate o administrador.");
 		context.addCallbackParam("resultado", "erro");
 		logger.error("Ocorreu um erro: " + e.getCause());
 	}
 	
 	public void limparDialog() {
 		RequestContext.getCurrentInstance().reset("cadastroClienteFormDlg");
-		setBean(new Cliente());
+		clienteDTO = new ClienteValidationBean();
 	}
 
 }

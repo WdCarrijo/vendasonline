@@ -85,8 +85,8 @@ public class VendaEditMB extends AbstractEditPageBean<Venda, Long> {
 	}
 
 	public void pesquisarCliente() {
-		if (!"".equals(telefone)) {
-			cliente = vendaBC.getClienteByTelefone(telefone.replace("-", ""));
+		if (!Constantes.STRING_VAZIA.equals(telefone)) {
+			cliente = vendaBC.getClienteByTelefone(telefone.replace("-", Constantes.STRING_VAZIA));
 		}
 
 		if (cliente == null || cliente.getId() == null) {

@@ -5,14 +5,16 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Getter
 @Setter
 public class ProdutoValidationBean {
 
-	@NotNull(message = "Descrição é obrigatório")
+	@NotBlank(message = "Descrição obrigatório")
 	private String descricao;
 	
-	@NotNull(message = "Preço é obrigatório")
+	@NotNull(message = "Preço obrigatório")
 	private Double preco;
 	
 }

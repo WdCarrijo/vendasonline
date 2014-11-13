@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?> 
+<?xml version="1.0" encoding="UTF-8" ?> 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -7,24 +7,24 @@
 	<h:form >
 		<p:menubar rendered="#{securityContext.user.id != null}" >
 		
-			<p:submenu label="Cadastros">
-				<p:submenu label="Empresa" rendered="#{securityContext.hasRole('rof20004')}"  >
-					<p:menuitem value="Cadastrar Empresa" onclick="cadastroEmpresaDlg.show()" update=":cadastroEmpresaFormDlg" actionListener="#{empresaEditMB.limparDialog('cadastroEmpresaFormDlg')}" >
+			<p:submenu label="#{messages['menu.submenu.label.cadastro']}">
+				<p:submenu label="#{messages['menu.submenu.label.empresa']}" rendered="#{securityContext.hasRole('rof20004')}"  >
+					<p:menuitem value="#{messages['menu.menuitem.label.cadastrarEmpresa']}" onclick="cadastroEmpresaDlg.show()" update=":cadastroEmpresaFormDlg" actionListener="#{empresaEditMB.limparDialog('cadastroEmpresaFormDlg')}" >
 						<p:resetInput target=":cadastroEmpresaFormDlg" />  
 					</p:menuitem>
-					<p:menuitem value="Listar Empresa" url="empresa/empresaList" />
+					<p:menuitem value="#{messages['menu.menuitem.label.listarEmpresa']}" url="empresa/empresaList" />
 				</p:submenu>
-				<p:menuitem value="Cliente" onclick="cadastroClienteDlg.show()" update=":cadastroClienteFormDlg" actionListener="#{clienteEditMB.limparDialog()}" >
+				<p:menuitem value="#{messages['menu.menuitem.label.cliente']}" onsuccess="cadastroClienteDlg.show()" update=":cadastroClienteFormDlg" actionListener="#{clienteEditMB.limparDialog()}" >
 					<p:resetInput target=":cadastroClienteFormDlg" />  
 				</p:menuitem>
-				<p:menuitem value="Produto" onclick="cadastroProdutoDlg.show()" update=":cadastroProdutoFormDlg" actionListener="#{produtoEditMB.limparDialog()}" >
+				<p:menuitem value="#{messages['menu.menuitem.label.produto']}" onsuccess="cadastroProdutoDlg.show()" update=":cadastroProdutoFormDlg" actionListener="#{produtoEditMB.limparDialog()}" >
 					<p:resetInput target=":cadastroProdutoFormDlg" />  
 				</p:menuitem>
 			</p:submenu>
 			
-			<p:menuitem value="Vendas" url="/vendas" />
+			<p:menuitem value="#{messages['menu.menuitem.label.vendas']}" url="/vendas" />
 			
-			<p:menuitem value="Relatórios" onclick="relatorioVendasDlg.show()" update=":relatorioVendasFormDlg" actionListener="#{empresaEditMB.limparDialog('relatorioVendasFormDlg')}" >
+			<p:menuitem value="#{messages['menu.menuitem.label.relatorios']}" onclick="relatorioVendasDlg.show()" update=":relatorioVendasFormDlg" actionListener="#{empresaEditMB.limparDialog('relatorioVendasFormDlg')}" >
 				<p:resetInput target=":relatorioVendasFormDlg" />  
 			</p:menuitem>
 
@@ -32,43 +32,43 @@
 		</p:menubar>
 	</h:form>
 	
-	<p:dialog widgetVar="cadastroEmpresaDlg" header="Cadastro de Empresa" resizable="false" draggable="false"
+	<p:dialog widgetVar="cadastroEmpresaDlg" header="#{messages['menu.dialog.cadastroempresa.header']}" resizable="false" draggable="false"
 		width="600" height="240" modal="true" rendered="#{securityContext.user.id != null and securityContext.hasRole('rof20004')}" >
 		
 		<h:form id="cadastroEmpresaFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
 		
 			<h:panelGrid columns="3" >
 			
-				<p:outputLabel for="razaoSocial" value="Razão Social: " />
-				<p:inputText id="razaoSocial"    value="#{empresaEditMB.bean.razaoSocial}" size="40" requiredMessage="Razão Social obrigatório" required="true" />
+				<p:outputLabel for="razaoSocial" value="#{messages['menu.dialog.cadastroempresa.label.razaoSocial']} " />
+				<p:inputText id="razaoSocial"    value="#{empresaEditMB.bean.razaoSocial}" size="40" requiredMessage="RazÃ£o Social obrigatÃ³rio" required="true" />
 				<p:message for="razaoSocial" />
 				
-				<p:outputLabel for="cnpj" value="CNPJ: " />
-				<p:inputText id="cnpj"    value="#{empresaEditMB.bean.cnpj}" size="40" requiredMessage="CNPJ obrigatório" required="true" maxlength="14" />
+				<p:outputLabel for="cnpj" value="#{messages['menu.dialog.cadastroempresa.label.cnpj']} " />
+				<p:inputText id="cnpj"    value="#{empresaEditMB.bean.cnpj}" size="40" requiredMessage="CNPJ obrigatÃ³rio" required="true" maxlength="14" />
 				<p:message for="cnpj" />
 				
-				<p:outputLabel for="telefone" value="Telefone: " />
-				<p:inputText id="telefone"    value="#{empresaEditMB.bean.telefone}" size="40" requiredMessage="Telefone obrigatório" required="true" />
+				<p:outputLabel for="telefone" value="#{messages['menu.dialog.cadastroempresa.label.telefone']} " />
+				<p:inputText id="telefone"    value="#{empresaEditMB.bean.telefone}" size="40" requiredMessage="Telefone obrigatÃ³rio" required="true" />
 				<p:message for="telefone" />
 				
-				<p:outputLabel for="email" value="E-Mail: " />
-				<p:inputText id="email"    value="#{empresaEditMB.bean.email}" size="40" requiredMessage="E-Mail obrigatório" required="true" />
+				<p:outputLabel for="email" value="#{messages['menu.dialog.cadastroempresa.label.email']} " />
+				<p:inputText id="email"    value="#{empresaEditMB.bean.email}" size="40" requiredMessage="E-Mail obrigatÃ³rio" required="true" />
 				<p:message for="email" />
 				
-				<p:outputLabel for="login" value="Login: " />
-				<p:inputText id="login"    value="#{empresaEditMB.bean.login}" size="40" requiredMessage="Login obrigatório" required="true" />
+				<p:outputLabel for="login" value="#{messages['menu.dialog.cadastroempresa.label.login']} " />
+				<p:inputText id="login"    value="#{empresaEditMB.bean.login}" size="40" requiredMessage="Login obrigatÃ³rio" required="true" />
 				<p:message for="login" />
 				
-				<p:outputLabel for="senha" value="Senha: " />
-				<p:password id="senha" value="#{empresaEditMB.bean.senha}" size="40" requiredMessage="Senha obrigatório" required="true" />
+				<p:outputLabel for="senha" value="#{messages['menu.dialog.cadastroempresa.label.senha']} " />
+				<p:password id="senha" value="#{empresaEditMB.bean.senha}" size="40" requiredMessage="Senha obrigatÃ³rio" required="true" />
 				<p:message for="senha" />
 			
 			</h:panelGrid>
 
-			<h:outputText value="(*) Campos obrigatórios" />
+			<h:outputText value="#{messages['campos.obrigatorios']}" />
 		
 			<div align="center">
-				<p:commandButton value="Salvar" action="#{empresaEditMB.insert}" update=":cadastroEmpresaFormDlg :messages" oncomplete="handleSaveEmpresa(xhr, status, args)" />
+				<p:commandButton value="#{messages['button.label.salvar']}" action="#{empresaEditMB.insert}" update=":cadastroEmpresaFormDlg :messages" oncomplete="handleSaveEmpresa(xhr, status, args)" />
 			</div>
 		
 		</h:form>
@@ -83,17 +83,15 @@
 			<h:panelGrid columns="3" >
 			
 				<p:outputLabel for="nome" value="Nome: " />
-				<p:inputText id="nome"    value="#{clienteEditMB.clienteDTO.nome}" size="40" requiredMessage="Nome obrigatório" required="true" />
+				<p:inputText id="nome"    value="#{clienteEditMB.clienteDTO.nome}" size="40" />
 				<p:message for="nome" />
 				
-				<p:outputLabel for="endereco" value="Endereço: " />
-				<p:inputText id="endereco"    value="#{clienteEditMB.clienteDTO.endereco}" size="40" requiredMessage="Endereço obrigatório" required="true" />
+				<p:outputLabel for="endereco" value="EndereÃ§o: " />
+				<p:inputText id="endereco"    value="#{clienteEditMB.clienteDTO.endereco}" size="40" />
 				<p:message for="endereco" />
 				
 				<p:outputLabel for="telefone" value="Telefone: " />
-				<p:inputText id="telefone"    value="#{clienteEditMB.clienteDTO.telefone.numero}" requiredMessage="Telefone obrigatório" required="true" maxlength="8" >
-					<f:validateLength minimum="8" maximum="8" />
-				</p:inputText>
+				<p:inputText id="telefone"    value="#{clienteEditMB.clienteDTO.telefone.numero}" maxlength="8" />
 				<p:message for="telefone" />
 				
 				<p:outputLabel for="complemento" value="Complemento: " />
@@ -101,10 +99,10 @@
 			
 			</h:panelGrid>
 
-			<h:outputText value="(*) Campos obrigatórios" />
+			<h:outputText value="(*) Campos obrigatÃ³rios" />
 		
 			<div align="center">
-				<p:commandButton value="Salvar" action="#{clienteEditMB.insert}" update=":cadastroClienteFormDlg, :messages" oncomplete="handleSaveCliente(xhr, status, args)" validateClient="true" />
+				<p:commandButton value="Salvar" actionListener="#{clienteEditMB.insert}" update=":cadastroClienteFormDlg, :messages" oncomplete="handleSaveCliente(xhr, status, args)" validateClient="true" />
 			</div>
 		
 			<pe:keyFilter for="telefone" mask="int" />
@@ -120,17 +118,17 @@
 		
 			<h:panelGrid columns="3" >
 			
-				<p:outputLabel for="descricao" value="Descrição: " />
+				<p:outputLabel for="descricao" value="DescriÃ§Ã£o: " />
 				<p:inputText id="descricao"    value="#{produtoEditMB.produtoDTO.descricao}" size="40" />
 				<p:message for="descricao" />
 				
-				<p:outputLabel for="preco" value="Preço: " />
+				<p:outputLabel for="preco" value="PreÃ§o: " />
 				<pe:inputNumber id="preco" value="#{produtoEditMB.produtoDTO.preco}" symbol="R$ " decimalPlaces="2" minValue="1" onkeypress="if (event.keyCode == 13) { executeSaveProduto(); return true; }" />
 				<p:message for="preco" />
 				
 			</h:panelGrid>
 		
-			<h:outputText value="(*) Campos obrigatórios" />
+			<h:outputText value="(*) Campos obrigatÃ³rios" />
 		
 			<div align="center">
 				<p:commandButton value="Salvar" actionListener="#{produtoEditMB.insert}" update=":cadastroProdutoFormDlg, :messages" oncomplete="handleSaveProduto(xhr, status, args)" validateClient="true" />
@@ -140,7 +138,7 @@
 		
 	</p:dialog>
 	
-	<p:dialog widgetVar="relatorioVendasDlg" header="Relatório de Vendas por Período" resizable="false" draggable="false"
+	<p:dialog widgetVar="relatorioVendasDlg" header="RelatÃ³rio de Vendas por PerÃ­odo" resizable="false" draggable="false"
 		width="620" height="250" modal="true" rendered="#{securityContext.user.id != null}" >
 
 		<h:form id="relatorioVendasFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
@@ -152,22 +150,22 @@
                                                 mode="popup" showButtonPanel="true" pages="1"
                                                 locale="#{currentLocale}" autocomplete="false"
                                                 required="true" showOn="button" pattern="dd/MM/yyyy"
-                                                navigator="true" requiredMessage="Preenchimento é obrigatório" converter="dateConverter" value="#{relatorioEmpresaMB.dataInicio}" />
+                                                navigator="true" requiredMessage="Preenchimento Ã© obrigatÃ³rio" converter="dateConverter" value="#{relatorioEmpresaMB.dataInicio}" />
 				<p:message for="dtInicio" />
 				
-				<p:outputLabel for="dtFim" value="Até: " />
+				<p:outputLabel for="dtFim" value="AtÃ©: " />
 				<p:calendar style="width: 135px;" id="dtFim" effect="fadeIn"
                                                 mode="popup" showButtonPanel="true" pages="1"
                                                 locale="#{currentLocale}" autocomplete="false"
                                                 required="true" showOn="button" pattern="dd/MM/yyyy"
-                                                navigator="true" requiredMessage="Preenchimento é obrigatório" converter="dateConverter" value="#{relatorioEmpresaMB.dataFim}" />
+                                                navigator="true" requiredMessage="Preenchimento Ã© obrigatÃ³rio" converter="dateConverter" value="#{relatorioEmpresaMB.dataFim}" />
 				<p:message for="dtFim" />
 				
 			</h:panelGrid>
 			
-			<p:fieldset legend="Tipo de Impressão" >
+			<p:fieldset legend="Tipo de ImpressÃ£o" >
 				<h:panelGrid columns="4" >
-					<p:selectOneRadio id="tipoImpressao" value="#{relatorioVendaMB.tipoImpressao}" required="true" requiredMessage="Preenchimento obrigatório"  >
+					<p:selectOneRadio id="tipoImpressao" value="#{relatorioVendaMB.tipoImpressao}" required="true" requiredMessage="Preenchimento obrigatÃ³rio"  >
 						<f:selectItem itemLabel="Finalizadas" itemValue="F" />
 						<f:selectItem itemLabel="Canceladas" itemValue="C"  />
 					</p:selectOneRadio>
@@ -175,10 +173,10 @@
 				</h:panelGrid>
 			</p:fieldset>
 			
-			<h:outputText value="(*) Campos obrigatórios" />
+			<h:outputText value="(*) Campos obrigatÃ³rios" />
 		
 			<div align="center">
-				<p:commandButton value="Gerar Relatório" update=":relatorioVendasFormDlg :messages" actionListener="#{relatorioVendaMB.gerarRelatorio}" oncomplete="handleGerarRelatorio(xhr, status, args)" validateClient="true" ajax="false" />
+				<p:commandButton value="Gerar RelatÃ³rio" update=":relatorioVendasFormDlg :messages" actionListener="#{relatorioVendaMB.gerarRelatorio}" oncomplete="handleGerarRelatorio(xhr, status, args)" validateClient="true" ajax="false" />
 			</div>
 
 		</h:form>

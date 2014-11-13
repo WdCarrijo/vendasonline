@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?> 
+<?xml version="1.0" encoding="UTF-8" ?> 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -12,6 +12,7 @@
 			
 				<p:outputLabel value="Telefone: " for="telefoneCliente" />
 				<p:inputMask mask="9999-9999" id="telefoneCliente" value="#{vendaEditMB.telefone}" disabled="#{not empty vendaEditMB.cliente.id}" />
+				<p:spacer height="10" ></p:spacer>
 				<p:commandButton value="Pesquisar" actionListener="#{vendaEditMB.pesquisarCliente}" update="@form" rendered="#{empty vendaEditMB.cliente.id}" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />
 				<p:commandButton value="Novo Cliente" actionListener="#{vendaEditMB.limparCliente}" update="@form" rendered="#{not empty vendaEditMB.cliente.id}" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />
 			
@@ -23,7 +24,7 @@
 					<h:outputText value="Nome: " style="font-weight: bold;" />
 					<h:outputText value="#{vendaEditMB.cliente.nome}" style="color: blue;" />
 					
-					<h:outputText value="Endereço: " style="font-weight: bold;" />
+					<h:outputText value="EndereÃ§o: " style="font-weight: bold;" />
 					<h:outputText value="#{vendaEditMB.cliente.endereco}" style="color: blue;" />
 					
 					<h:outputText value="Complemento: " style="font-weight: bold;" />
@@ -44,23 +45,22 @@
 			
 			</p:fieldset>
 			
-			<div class="clear"></div>
-			<p:spacer height="115" ></p:spacer>
-			
-			<div align="center">
+			<div align="center" style="padding-top: 20%;" >
+				
 				<p:commandButton value="Incluir Produto" styleClass="btnIncluir" actionListener="#{vendaEditMB.carregaProdutos}" update=":pesquisaProdutoForm" rendered="#{not empty vendaEditMB.cliente.id}" onstart="loaderBlock.show();" oncomplete="pesquisaProdutoDlg.show();" />
 				
 				<p:commandButton value="Concluir Venda" styleClass="btnConcluir" rendered="#{not empty vendaEditMB.cliente.id and not empty vendaEditMB.itens}" onclick="confirmarConcluirVendaDlg.show();" />
-				<p:confirmDialog widgetVar="confirmarConcluirVendaDlg" header="Concluir Venda" message="Você tem certeza que deseja concluir a venda?" showEffect="fade" hideEffect="explode">  
+				<p:confirmDialog widgetVar="confirmarConcluirVendaDlg" header="Concluir Venda" message="VocÃª tem certeza que deseja concluir a venda?" showEffect="fade" hideEffect="explode">  
 			        <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":principal :messages" actionListener="#{vendaEditMB.concluirVenda}" onclick="confirmarConcluirVendaDlg.hide();" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />  
-			        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="confirmarConcluirVendaDlg.hide();" />       
+			        <p:commandButton value="NÃ£o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="confirmarConcluirVendaDlg.hide();" />       
 		    	</p:confirmDialog>
 				
 				<p:commandButton value="Cancelar Venda" styleClass="btnCancelar" rendered="#{not empty vendaEditMB.cliente.id and not empty vendaEditMB.itens}" onclick="confirmarCancelarVendaDlg.show();" />
-				<p:confirmDialog widgetVar="confirmarCancelarVendaDlg" header="Cancelar Venda" message="Você tem certeza que deseja cancelar a venda?" showEffect="fade" hideEffect="explode">  
+				<p:confirmDialog widgetVar="confirmarCancelarVendaDlg" header="Cancelar Venda" message="VocÃª tem certeza que deseja cancelar a venda?" showEffect="fade" hideEffect="explode">  
 			        <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":principal :messages" actionListener="#{vendaEditMB.limparCliente}" onclick="confirmarCancelarVendaDlg.hide();" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />  
-			        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="confirmarCancelarVendaDlg.hide();" />       
+			        <p:commandButton value="NÃ£o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="confirmarCancelarVendaDlg.hide();" />       
 		    	</p:confirmDialog>
+		    	
 			</div>
 		
 			<br/>
@@ -69,11 +69,11 @@
 			
 				<p:dataTable value="#{vendaEditMB.itens}" var="item" emptyMessage="Nenhum produto encontrado." id="tabelaProdutosAdicionados" rows="3" paginator="true"  >
 				
-					<p:column headerText="Descrição" style="width: 40%" >
+					<p:column headerText="DescriÃ§Ã£o" style="width: 40%" >
 						#{item.produto.descricao}
 					</p:column>
 					
-					<p:column headerText="Preço" style="width: 15%" >
+					<p:column headerText="PreÃ§o" style="width: 15%" >
 						<h:outputText value="#{item.produto.preco}" >
 							<f:convertNumber currencySymbol="R$" type="currency" />
 						</h:outputText>
@@ -89,12 +89,12 @@
 						</h:outputText>
 					</p:column>
 					
-					<p:column headerText="Ações" style="width: 15%" >
+					<p:column headerText="AÃ§Ãµes" style="width: 15%" >
 						<div align="center">
 							<p:commandButton icon="ui-icon ui-icon-trash" title="Remover Produto" onclick="confirmarRemoverProdutoDlg.show();"  />
-							<p:confirmDialog widgetVar="confirmarRemoverProdutoDlg" header="Remover Produto" message="Você tem certeza que deseja remover o produto selecionado?" showEffect="fade" hideEffect="explode">  
+							<p:confirmDialog widgetVar="confirmarRemoverProdutoDlg" header="Remover Produto" message="VocÃª tem certeza que deseja remover o produto selecionado?" showEffect="fade" hideEffect="explode">  
 						        <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":principal, :messages" actionListener="#{vendaEditMB.removerItem(item)}" onclick="confirmarRemoverProdutoDlg.hide();" onstart="loaderBlock.show();" oncomplete="loaderBlock.hide();" />  
-						        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="confirmarRemoverProdutoDlg.hide();" />       
+						        <p:commandButton value="NÃ£o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="confirmarRemoverProdutoDlg.hide();" />       
 		    				</p:confirmDialog>  
 						</div>
 					</p:column>
@@ -105,17 +105,17 @@
 		
 		</h:form>
 		
-		<p:dialog widgetVar="pesquisaProdutoDlg" header="Seleção de Produtos" width="640" height="330" modal="true" resizable="false" draggable="false" onShow="loaderBlock.hide()" emptyMessage="Nenhum produto encontrado." >
+		<p:dialog widgetVar="pesquisaProdutoDlg" header="SeleÃ§Ã£o de Produtos" width="640" height="330" modal="true" resizable="false" draggable="false" onShow="loaderBlock.hide()" emptyMessage="Nenhum produto encontrado." >
 		
 				<h:form id="pesquisaProdutoForm" >
 				
 					<p:dataTable id="teste" value="#{vendaEditMB.produtos}" var="produto" rows="5" paginator="true" >
 					
-						 <p:column filterBy="#{produto.descricao}" headerText="Descrição" filterMatchMode="contains">  
+						 <p:column filterBy="#{produto.descricao}" headerText="DescriÃ§Ã£o" filterMatchMode="contains">  
 			            	<h:outputText value="#{produto.descricao}" />  
 	        			</p:column>
 	        			  
-						<p:column headerText="Preço" >
+						<p:column headerText="PreÃ§o" >
 							<h:outputText value="#{produto.preco}" >
 								<f:convertNumber currencySymbol="R$" type="currency" />
 							</h:outputText>
@@ -126,7 +126,7 @@
 							<pe:keyFilter for="quantidadeProduto" mask="int" />
 						</p:column>
 						
-						<p:column headerText="Ações" >
+						<p:column headerText="AÃ§Ãµes" >
 							<div align="center">
 								<p:commandButton icon="ui-icon ui-icon-folder-open" title="Adicionar Produto" update=":principal, :messages" actionListener="#{vendaEditMB.adicionarProduto(produto)}" />
 							</div>

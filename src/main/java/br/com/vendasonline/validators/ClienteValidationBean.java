@@ -1,7 +1,5 @@
 package br.com.vendasonline.validators;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,16 +11,12 @@ import br.com.vendasonline.domain.Telefone;
 @Setter
 public class ClienteValidationBean {
 	
-	@NotNull
-	@NotBlank
+	@NotBlank(message = "Nome obrigatório")
 	private String nome;
 
-	@NotNull
-	@NotBlank
+	@NotBlank(message = "Endereço obrigatório")
 	private String endereco;
 
-	@NotNull
-	@NotBlank
 	private Telefone telefone;
 
 	private String complemento;
