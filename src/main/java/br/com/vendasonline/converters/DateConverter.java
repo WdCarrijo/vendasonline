@@ -17,14 +17,10 @@ public class DateConverter implements Converter {
     
     @Override  
     public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {  
-          
         df.setLenient(false);  
         try {  
-              
             return df.parse(arg2);              
-              
         } catch (Exception e) {  
-              
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro na conversão", "Formato de data inválido!"));   
         }  
     }  
@@ -32,11 +28,9 @@ public class DateConverter implements Converter {
     @Override  
     public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {  
         try {  
-              
             df.setLenient(false);  
             String d = df.format((Date) arg2);  
-              
-            return d;  
+            return d;
         } catch (Exception e) {  
             return "";  
         }  

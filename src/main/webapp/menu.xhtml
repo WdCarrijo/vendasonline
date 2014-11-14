@@ -75,34 +75,34 @@
 		
 	</p:dialog>
 
-	<p:dialog widgetVar="cadastroClienteDlg" header="Cadastro de Cliente" resizable="false" draggable="false"
+	<p:dialog widgetVar="cadastroClienteDlg" header="#{messages['menu.dialog.cadastrocliente.header']}" resizable="false" draggable="false"
 		width="600" height="175" modal="true" rendered="#{securityContext.user.id != null}" >
 		
 		<h:form id="cadastroClienteFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
 		
 			<h:panelGrid columns="3" >
 			
-				<p:outputLabel for="nome" value="Nome: " />
+				<p:outputLabel for="nome" value="#{messages['menu.dialog.cadastrocliente.label.nome']} " />
 				<p:inputText id="nome"    value="#{clienteEditMB.clienteDTO.nome}" size="40" />
 				<p:message for="nome" />
 				
-				<p:outputLabel for="endereco" value="Endereço: " />
+				<p:outputLabel for="endereco" value="#{messages['menu.dialog.cadastrocliente.label.endereco']} " />
 				<p:inputText id="endereco"    value="#{clienteEditMB.clienteDTO.endereco}" size="40" />
 				<p:message for="endereco" />
 				
-				<p:outputLabel for="telefone" value="Telefone: " />
+				<p:outputLabel for="telefone" value="#{messages['menu.dialog.cadastrocliente.label.telefone']} " />
 				<p:inputText id="telefone"    value="#{clienteEditMB.clienteDTO.telefone.numero}" maxlength="8" />
 				<p:message for="telefone" />
 				
-				<p:outputLabel for="complemento" value="Complemento: " />
+				<p:outputLabel for="complemento" value="#{messages['menu.dialog.cadastrocliente.label.complemento']} " />
 				<p:inputText id="complemento"    value="#{clienteEditMB.clienteDTO.complemento}" size="40" />
 			
 			</h:panelGrid>
 
-			<h:outputText value="(*) Campos obrigatórios" />
+			<h:outputText value="#{messages['campos.obrigatorios']}" />
 		
 			<div align="center">
-				<p:commandButton value="Salvar" actionListener="#{clienteEditMB.insert}" update=":cadastroClienteFormDlg, :messages" oncomplete="handleSaveCliente(xhr, status, args)" validateClient="true" />
+				<p:commandButton value="#{messages['button.label.salvar']}" actionListener="#{clienteEditMB.insert}" update=":cadastroClienteFormDlg, :messages" oncomplete="handleSaveCliente(xhr, status, args)" validateClient="true" />
 			</div>
 		
 			<pe:keyFilter for="telefone" mask="int" />
@@ -111,41 +111,41 @@
 		
 	</p:dialog>
 	
-	<p:dialog widgetVar="cadastroProdutoDlg" header="Cadastro de Produto" resizable="false" draggable="false"
+	<p:dialog widgetVar="cadastroProdutoDlg" header="#{messages['menu.dialog.cadastroproduto.header']}" resizable="false" draggable="false"
 		width="600" height="120" modal="true" rendered="#{securityContext.user.id != null}" >
 		
 		<h:form id="cadastroProdutoFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
 		
 			<h:panelGrid columns="3" >
 			
-				<p:outputLabel for="descricao" value="Descrição: " />
+				<p:outputLabel for="descricao" value="#{messages['menu.dialog.cadastroproduto.label.descricao']} " />
 				<p:inputText id="descricao"    value="#{produtoEditMB.produtoDTO.descricao}" size="40" />
 				<p:message for="descricao" />
 				
-				<p:outputLabel for="preco" value="Preço: " />
+				<p:outputLabel for="preco" value="#{messages['menu.dialog.cadastroproduto.label.preco']} " />
 				<pe:inputNumber id="preco" value="#{produtoEditMB.produtoDTO.preco}" symbol="R$ " decimalPlaces="2" minValue="1" onkeypress="if (event.keyCode == 13) { executeSaveProduto(); return true; }" />
 				<p:message for="preco" />
 				
 			</h:panelGrid>
 		
-			<h:outputText value="(*) Campos obrigatórios" />
+			<h:outputText value="#{messages['campos.obrigatorios']}" />
 		
 			<div align="center">
-				<p:commandButton value="Salvar" actionListener="#{produtoEditMB.insert}" update=":cadastroProdutoFormDlg, :messages" oncomplete="handleSaveProduto(xhr, status, args)" validateClient="true" />
+				<p:commandButton value="#{messages['button.label.salvar']}" actionListener="#{produtoEditMB.insert}" update=":cadastroProdutoFormDlg, :messages" oncomplete="handleSaveProduto(xhr, status, args)" validateClient="true" />
 			</div>
 
 		</h:form>
 		
 	</p:dialog>
 	
-	<p:dialog widgetVar="relatorioVendasDlg" header="Relatório de Vendas por Período" resizable="false" draggable="false"
+	<p:dialog widgetVar="relatorioVendasDlg" header="#{messages['menu.dialog.relatoriovendasporperiodo.header']}" resizable="false" draggable="false"
 		width="620" height="250" modal="true" rendered="#{securityContext.user.id != null}" >
 
 		<h:form id="relatorioVendasFormDlg" onkeypress="if (event.keyCode == 13) {return false}" >
 		
 			<h:panelGrid columns="3" >
 			
-				<p:outputLabel for="dtInicio" value="De: " />
+				<p:outputLabel for="dtInicio" value="#{messages['menu.dialog.relatoriovendasporperiodo.label.dataInicio']} " />
 				<p:calendar style="width: 135px;" id="dtInicio" effect="fadeIn"
                                                 mode="popup" showButtonPanel="true" pages="1"
                                                 locale="#{currentLocale}" autocomplete="false"
@@ -153,7 +153,7 @@
                                                 navigator="true" requiredMessage="Preenchimento é obrigatório" converter="dateConverter" value="#{relatorioEmpresaMB.dataInicio}" />
 				<p:message for="dtInicio" />
 				
-				<p:outputLabel for="dtFim" value="Até: " />
+				<p:outputLabel for="dtFim" value="#{messages['menu.dialog.relatoriovendasporperiodo.label.dataFim']} " />
 				<p:calendar style="width: 135px;" id="dtFim" effect="fadeIn"
                                                 mode="popup" showButtonPanel="true" pages="1"
                                                 locale="#{currentLocale}" autocomplete="false"
@@ -163,7 +163,7 @@
 				
 			</h:panelGrid>
 			
-			<p:fieldset legend="Tipo de Impressão" >
+			<p:fieldset legend="#{messages['menu.dialog.relatoriovendasporperiodo.fieldset.header.tipoImpressao']}" >
 				<h:panelGrid columns="4" >
 					<p:selectOneRadio id="tipoImpressao" value="#{relatorioVendaMB.tipoImpressao}" required="true" requiredMessage="Preenchimento obrigatório"  >
 						<f:selectItem itemLabel="Finalizadas" itemValue="F" />
@@ -173,7 +173,7 @@
 				</h:panelGrid>
 			</p:fieldset>
 			
-			<h:outputText value="(*) Campos obrigatórios" />
+			<h:outputText value="#{messages['campos.obrigatorios']}" />
 		
 			<div align="center">
 				<p:commandButton value="Gerar Relatório" update=":relatorioVendasFormDlg :messages" actionListener="#{relatorioVendaMB.gerarRelatorio}" oncomplete="handleGerarRelatorio(xhr, status, args)" validateClient="true" ajax="false" />
